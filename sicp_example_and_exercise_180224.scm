@@ -154,3 +154,93 @@
   (cond ((< a (- n 1)) (iter2 (+ a 1) n))))
 
 
+(define (sum a b)
+  (if (> a b)
+      0
+      (+ a (sum (+ a 1) b))))
+;;(define (<name>  a  b)
+;;  (if (> a b)
+;;      0
+;;      (<term> a (<name> <next> a b))))
+
+(define (sum2 term a next b)
+  (if (> a b)
+      0
+      (+ (term a)
+         (sum term (next a) next b))))
+
+(define (cube a)
+  (* a a a))
+(define (inc n)
+  (+ n 1))
+(define (sum-cubes a b)
+  (sum cube a inc b))
+(define (identiy x)
+  x)
+(define (sum-integer a b)
+  (sum identiy a inc b))
+(define (pi-sum a b)
+  (define (pi-term x)
+    (/ 1.0 (* x (+ x 2))))
+  (define (pi-next x)
+    (+ x 4))
+  (sum pi-sum a pi-next b))
+
+  
+;;exercise 1.30
+(define (sum3 term a next b)
+  (define (iter a result)
+    (if (> a b)
+        result
+        (iter (next a) (+ result (term a)))))
+  (iter a 0))
+
+;;exercise 1.31
+;;a
+(define (product term a next b)
+  (if (> a b)
+      1
+      (* (term a)
+         (product term (next a) next b))))
+
+(define (factorial a b)
+  (define (identity x) x)
+  (define (inc x)
+    (+ x 1))
+  (product identity a inc b))
+
+(define (pi a b)
+  (define (pi-term x)
+    (/ (* x (+ x 2))
+       (square (+ x 1))))
+  (define (pi-next x)
+    (+ x 2))
+  (define (square x)
+    (* x x ))
+  (* 4 (product pi-term a pi-next b)))
+
+;;b
+(define (product-iter term a next b)
+  (define (iter a result)
+    (if (> a b)
+        result
+        (iter (next a) (* (term a) result))))
+  (iter a 1.0))
+
+
+(define (pi-iter a b)
+  (define (pi-term x)
+    (/ (* x (+ x 2))
+       (square (+ x 1))))
+  (define (pi-next x)
+    (+ x 2))
+  (define (square x)
+    (* x x ))
+  (display (* 4 (product-iter pi-term a pi-next b))))
+
+(define (runtime) (current-milliseconds))
+(define (checktime a b t)
+  (pi-iter a b)
+  (newline)
+  (- (runtime) t))
+
