@@ -244,3 +244,25 @@
   (newline)
   (- (runtime) t))
 
+
+;;exercise 1.32
+
+;;a
+(define (accumulate combiner null-value term a next b)
+  (if (> a b)
+      null-value
+      (combiner (term a) (accumulate combiner null-value term (next a) next b))))
+
+;;(define (add) +)
+;;(define (zero x) x)
+;;(define (term x) x)
+;;(define (next x) (+ x 1))
+
+;;b
+(define (accumulate2 combiner null-value term a next b)
+  (if (> a b)
+      null-value
+      (accumulate2 combiner (combiner (term a) null-value) term (next a) next b)))
+
+
+
