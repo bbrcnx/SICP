@@ -1,6 +1,6 @@
 #lang racket
 
-;;1.2.1 linear recursion and iteration
+;;1.2.1 linear recursion and iteration.
 (define (a x y)
 	(cond ((= y 0) 0)
 		((= x 0) (* 2 y))
@@ -192,7 +192,7 @@
     ((test-prim n) (fast-prim n (- times 1)))
     (else false)))
   
-
+ 
 ;;exercise 1.21
 ;;(smallest-divisor 199)
 ;;=199
