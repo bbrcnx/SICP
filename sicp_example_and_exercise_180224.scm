@@ -44,7 +44,7 @@
 	(define (sqrt-iter guess)
 		(If (good guess)
 			guess
-			(sqrt-iter (improve guess))))
+			(sqrt-iter (improve guess)))
 	(sqrt-iter 1.0))
 
 ;;1.2.2 Tree recursion
