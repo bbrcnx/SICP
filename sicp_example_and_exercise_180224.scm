@@ -1,5 +1,150 @@
 #lang racket
 
+;;1.2.1 linear recursion and iteration
+(define (a x y)
+	(cond ((= y 0) 0)
+		((= x 0) (* 2 y))
+		((= y 1) 2)
+		(else (a (- x 1) (a x (- y 1))))))
+
+
+(define (+ a b)
+	(if (= a 0) 
+		b
+		(inc (+ (dec a) b))))
+(define (+ a b)
+	(if (= a 0) 
+		b
+		(+ (dec a) (inc b))))
+	
+
+(define (factorial x)
+	(define (fact-cunt counter product)
+		(if (> counter x)
+			product
+			(fact-cunt (+ counter 1) (* counter product ))))
+	(fact-cunt 1 1))
+
+
+(define (factorial x)
+	(if (= x 1)
+		1
+		(* x (factorial (- x 1)))))
+
+
+(define (sqrt x)
+	(define (abs a)
+		(if (< a 0)
+			(- a)
+			a))
+	(define (good guess)
+		(< abs(- (* guess guess) x) 0.00001)))
+	(define (improve guess)
+		(/ (+ guess (/ x guess)) 2))
+	(define (sqrt-iter guess)
+		(If (good guess)
+			guess
+			(sqrt-iter (improve guess))))
+	(sqrt-iter 1.0))
+
+;;1.2.2 Tree recursion
+
+(define (fib n)
+	(cond ((= n 0) 0)
+		((= n 1) 1)
+		(else (+ (fib (- n 1)) (fib (- n 2))))))
+		
+(define (fib n)
+	(define (fib-iter a b count)
+		(if (= count 0)
+			b
+			(fib-iter (+ a b) a (- count 1))))
+	(fib-iter 1 0 n))
+
+(define (change amount)
+	(cc amount 5))
+	
+(define (cc amount kinds)
+	(cond 
+		((= amount 0) 1)
+		((or (< amount 0) (= kinds 0)) 0)
+		(else (+ (cc amount (- kinds 1))
+			(cc (- amount (denom kinds)) kinds)))))	
+(define (denom kinds)
+	(cond
+		((= kinds 1) 1)
+		((= kinds 2) 5)
+		((= kinds 3) 10)
+		((= kinds 4) 25)
+		((= kinds 5) 50)))
+
+;;exercise 1.11
+(define (f n)
+	(if (< n 3) 
+		n
+		(+ (f (- n 1)) (f (- n 2)) (f (- n 3)))))
+(f 5)
+(+ (f 4) (f 3) (f 2))
+
+;;exercise 1.12
+(define (pascal a b)
+	(cond
+		((= a 1) 1)
+		((= b a) 1)
+		(else (+ (pascal (- a 1) (- b 1)) (pascal (- a 1) (+ b 1))))))
+
+;;1.2.4 Exponentiation
+(define (exp b n)
+	(if (= n 0)
+		1
+		(* b (exp b (- n 1)))))
+		
+(define (exp b n)
+	(define (exp-iter b n product)
+		(if (= n 0)
+			product
+			(exp-iter b (- n 1) (* b product))))
+	(exp-iter 2 3 1))
+
+(define (exp b n)
+	(cond ((= n 0) 1)
+		((even? n)
+             (square (exp b ( / n 2))))
+		(else 
+            (* b  (exp b  (- n 1))))))
+           
+;;exercise 1.16
+(define (exp b n)
+	(define (exp-iter product b n)
+		(cond 
+			((= n 0) 1)
+			((even? n) (exp-iter product (square b) (/ n 2)))
+			(else (exp-iter (* product b) b (- n 1)))))
+	(define 1 b n))
+
+ 
+;;exercise 1.17
+(define (* a b)
+	(if (= b 0)
+		0
+		(+ a (* a (- b 1)))))
+
+(define (* a b)
+	(cond
+		((= b 0) 0)
+		((even? b) (+ (double a) (* a (halve b))))
+		(else (+ a (* a (- b 1))))))
+
+;;exercise 1.18
+(define (* a b)
+	(define (iter c a b)
+		(cond
+			((= b 0) c)
+			((even? b) (iter c (double a) (halve b)))
+			(else (iter (+ c a) a (- b 1)))))
+	(iter 0 a b))
+
+
 ;;1.2.5 Greatest Common Divisors
 
 ;;Searching for divisors
@@ -152,6 +297,29 @@
 (define (iter2 a n)
   (cond ((not (= (expmod a n n) a)) (display a)))
   (cond ((< a (- n 1)) (iter2 (+ a 1) n))))
+
+;;1.3.1 Procedure as arguments
+
+(define (sum a b)
+	(if (> a b)
+		0
+		(+ a (sum (+ a 1) b))))
+		
+(define (sum-cubes a b)
+	(if (> a b)
+		0
+		(+ (cube a) (sum-cubes (+ a 1) b))))
+
+(define (pi-sum a b)
+	(if (> a b)
+		0
+		(+ (/ 1.0 (* a (+ a 2)))
+		   (pi-sum (+ a 4) b))))
+
+(define (<name> term a next b
+	(if (> a b)
+		0
+		(+ (<term> a) (<name> (<next a) b )))))		   
 
 
 (define (sum a b)
