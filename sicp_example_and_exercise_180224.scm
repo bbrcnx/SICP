@@ -432,5 +432,3 @@
       null-value
       (accumulate2 combiner (combiner (term a) null-value) term (next a) next b)))
 
-
-
