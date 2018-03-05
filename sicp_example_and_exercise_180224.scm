@@ -395,7 +395,6 @@
         (iter (next a) (* (term a) result))))
   (iter a 1.0))
 
-
 (define (pi-iter a b)
   (define (pi-term x)
     (/ (* x (+ x 2))
@@ -411,7 +410,6 @@
   (pi-iter a b)
   (newline)
   (- (runtime) t))
-
 
 ;;exercise 1.32
 
