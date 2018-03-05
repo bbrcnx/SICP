@@ -430,3 +430,105 @@
       null-value
       (accumulate2 combiner (combiner (term a) null-value) term (next a) next b)))
 
+
+;;1.3.2 Constructing Procedures Using Lambda
+
+(lambda (x) (/ 1.0 (* x (+ x 2))))
+
+(define (pi-sum a b)
+  (sum (lambda (x) (/ 1.0 (* x ( + x 2))))
+       a
+       (lambda (x) (+ x 1))
+       b))
+
+(define (integral f a b dx)
+  (* (sum f
+          (+ a (/ dx 2.0))
+          (lambda (x) (+ x dx))
+          b)
+     dx))
+
+
+;;The following two procedures are same.
+(define (plus4 x) (+ x 4))
+(define plus42 (lambda (x) (+ x 4)))
+
+((lambda (x y z) (+ x y (square z)))
+ 1 2 3)
+
+;;Using let to create local variables
+
+(define (f x y)
+  (define (f-helper a b)
+    (+ (* x (square a))
+       (* y b)
+       (* a b)))
+  (f-helper (+ 1 (* x y))
+            (- 1 y)))
+
+(define (f2 x y)
+  ((lambda (a b)
+     (+ (* x (square a))
+        (* y b)
+        (* a b)))
+   (+ 1 (* x y))
+   (- 1 y)))
+
+(define (f3 x y a b)
+  (+ (* x (square a))
+     (* y b)
+     (* a b)))
+
+(f3 x y (+ 1 (* x y)) (- 1 y))
+
+(define (f4 x y)
+  (let ((a (+ 1 (* x y)))
+        (b (- 1 y)))
+    (+ (* x (square a))
+       (* y b)
+       (* a b))))
+
+;;Let is local. For example if x is 5. the value will be 38
+(+ (let ((x 3))
+     (+ x (* x 10)))
+   x)
+
+;;If x is 2, the value will be 12.
+(let ((x 3)
+      (y (+ x 2)))
+  (* x y))
+
+
+;;exercise 1.34
+;;(f f)
+;;(f 2)
+;;(2 2)
+
+;;1.3.3 Procedures as General Methods
+
+;;Finding roots of equations by the half-iterval method
+
+(define (search f neg-point pos-point)
+  (let ((mid-point (average neg-point pos-point)))
+       (if (close-enough? neg-point pos-point)
+           mid-point
+           (let ((test-value (f mid-point)))
+             (cond ((positive? test-value)
+                    (search f neg-point mid-point))
+                   ((negative? test-value)
+                    (search f mid-point pos-point))
+                   (else mid-point))))))
+
+(define (close-enough? x y) (< (abs (- x y)) 0.001))
+(define (average a b) (/ (+ a b) 2.0))
+
+(define (half-interval-method f a b)
+  (let ((a-value (f a))
+        (b-value (f b)))
+    (cond ((and (negative? a-value) (positive? b-value))
+           (search f a b))
+          ((and (negative? b-value) (positive? a-value))
+           (search f b a))
+          (else
+           (error "value are not opposite sign" a b)))))
+
