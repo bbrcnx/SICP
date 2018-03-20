@@ -559,3 +559,86 @@
           next
           (try next))))
   (try first-guess))
+
+
+;;2.1.1 Example: Arithmatic operations for rational numbers.
+(define (add-rat x y)
+  (make-rat (+ (* (numer x) (denom y))
+               (* (numer y) (denom x)))
+            (* (denom x) (denom y))))
+
+(define (sub-rat x y)
+  (make-rat (- (* (numer x) (denom y))
+               (* (numer y) (denom x)))
+            (* (denom x) (denom y))))
+
+(define (mul-rat x y)
+  (make-rat (* (numer x) (numer y))
+            (* (denom x) (denom y))))
+
+(define (div-rat x y)
+  (make-rat (* (numer x) (denom y))
+            (* (denom x) (numer y))))
+
+(define (equal-rat? x y)
+  (= (* (numer x) (denom y))
+     (* (numer y) (denom x))))
+
+;;pairs
+(define x (cons 1 2))
+;;cons stands for "construct"
+
+;;(car x)
+;;car stands for contents of address part of register.
+;;(cdr x)
+;;cdr stans for contents of decrement part of register.
+
+(define x (cons 1 2))
+(define y (cons 3 4))
+(define z (cons x y))
+
+;;(car (car z))
+;;1
+;;(car (cdr z))
+;;3
+
+;;The following way is more efficient.
+;;(define make-rat cons)
+;;(define numer car)
+;;(define denom cdr)
+
+(define (make-rat x y) (cons x y))
+(define (numer x) (car x))
+(define (denom x) (cdr x))
+
+(define (print-rat x)
+  (newline)
+  (display (numer x))
+  (display "/")
+  (display (denom x)))
+
+(define one-half (make-rat 1 2))
+(print-rat one-half)
+(define one-third (make-rat 1 3))
+(print-rat (add-rat one-half one-third))
+(print-rat (mul-rat one-half one-third))
+(print-rat (add-rat one-third one-third))
+
+(define (make-rat2 n d)
+  (let ((g (gcd n d)))
+    (cons (/ n g) (/ d g))))
+        
+
+;;exercise 2.1
+;;solution 1
+(define (make-rat3 x y)
+  (let ((g (gcd x y)))
+    (cond ((and (< x 0) (< y 0))
+           (cons (* -1 (/ x g)) (* -1 (/ y g))))
+          ((< y 0)
+           (cons (/ x g) (/ y g)))
+          (else (cons (/ x g) (/ y g))))))
+;;solution 2
+(define (make-rat4 n d)
+  (let ((g ((if (< d ) - +) (abs (gcd n d)))))
+    (cons (/ n g) (/ d g))))
