@@ -657,3 +657,10 @@
 (define (make-rat4 n d)
   (let ((g ((if (< d ) - +) (abs (gcd n d)))))
     (cons (/ n g) (/ d g))))
+
+;;solution 3
+(define (make-rat5 x y)
+  (let ((g (abs (gcd x y))))
+    (if (< y 0)
+        (cons (* -1 (/ x g)) (* -1 (/ y g)))
+        (cons (/ x g) (/ y g)))))
