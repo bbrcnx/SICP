@@ -147,6 +147,17 @@
 
 ;;1.2.5 Greatest Common Divisors
 
+;;The idea of the Greatest common divisor (GCD) is base on the observation
+;;that, if r is the remainder when a is divided by b, then the common divisor
+;;of a and b are precisely the same as the common divisor of b and r.
+
+(define (gcd a b)
+	(if (= b 0)
+		a
+		(gcd b (remainder a b))))
+
+;;1.2.6 Example: Testing for primality.
+
 ;;Searching for divisors
 (define (square a)
   (* a a))
@@ -167,6 +178,10 @@
 
 
 ;;Fermat test
+
+;;Fermat's Little Therom: If n is a prim number and a is anyway positive integer
+;;less than n, then a rise to nth power is congruent to a modulo n.
+
 ;;A与B相乘后再算与C相除的remainder，和A除C的remainder乘以B除C的remainder相等。
 ;;前一种做法会导致特别大的数算起来会很慢，而后一种做法可以避免掉大数的出现。
 (define (expmod a exp n)
