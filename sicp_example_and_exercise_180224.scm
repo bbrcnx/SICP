@@ -633,11 +633,11 @@
   (display (denom x)))
 
 (define one-half (make-rat 1 2))
-(print-rat one-half)
+;(print-rat one-half)
 (define one-third (make-rat 1 3))
-(print-rat (add-rat one-half one-third))
-(print-rat (mul-rat one-half one-third))
-(print-rat (add-rat one-third one-third))
+;(print-rat (add-rat one-half one-third))
+;(print-rat (mul-rat one-half one-third))
+;(print-rat (add-rat one-third one-third))
 
 (define (make-rat2 n d)
   (let ((g (gcd n d)))
@@ -664,3 +664,95 @@
     (if (< y 0)
         (cons (* -1 (/ x g)) (* -1 (/ y g)))
         (cons (/ x g) (/ y g)))))
+
+;;exercise 2.2
+(define (make-segment x y)
+	(cons x y))
+(define (start-segment x)
+	*(car x))
+(define (end-segment x)
+	(cdr x))
+(define (make-point x y)
+	(cons x y))
+(define (x-point x)
+	(car x))
+(define (y-point x)
+	(cdr x))
+
+(define (avg x y)
+	(/ (+ x y) 2.0))
+	
+(define (mid-point x)
+	(make-point 
+		(avg (car (car x))
+			(car (cdr x)))
+		(avg (cdr (car x))
+			(cdr (cdr x)))))
+
+(define (print-point p)
+	(newline)
+	(display "(")
+	(display (x-point p))
+	(display ",")
+	(display (y-point p))
+	(display ")"))
+
+(define p1 (make-point 1 1))
+(define p2 (make-point 2 1))
+(define seg1 (make-segment p1 p2))
+
+
+(define mid1 (mid-point seg1))
+
+(print-point mid1)
+
+(define (make-rec x y)
+	(cons x y))
+
+(define (leng x)
+	(sqrt (+ (square (- (car (car x)) 
+		                (car (cdr x))))
+		     (square (- (cdr (car x))
+		     	       (cdr (cdr)))))))
+		
+(define (perim x)
+	(* 2 (+ (leng (car x))
+		    (leng (cdr x)))))
+
+
+;;exercise 2.3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;2.1.3 What is meant by data?
+(define (cons x y)
+	(define (dispatch m)
+		(cond ((= m 0) x)
+			  ((= m 1) y)
+			  (else (error "Arguments not 0 or 1: cons" m))))
+	(dispatch))
+
+(define (car z) (z 0))
+(define (cdr z) (z 1))
+
+;;exercise 2.4
+
+(define (cons x y)
+	(lambda m) (m x y))
+
+(define (car z)
+	(z (lambda (p q) p)))
+
+(define (cdr z)
+	(z (lambda (p q) q)))
+
+;;(car (con 0 1))
+;;((lambda (m) (m 0 1)) (lambda (p q ) p))
+;;((lambda (p q) p) 0 1)
+;;0
+
+;;exercise 2.5;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;exercise 2.6;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;exercise 2.7
+
