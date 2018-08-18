@@ -830,7 +830,16 @@
             (rev2 (cdr lst) (cons (car lst) lstnew))))
     (rev2 lst nil))
 
+;; exercise 2.19
+(define (no-more? v)
+    (if (null? v)
+        1
+        0))
+(define (except-first-denomination v)
+    (cdr v))
+    
+(define (first-denomination v)
+    (car v))
 
-;;(cons (car (cdr (cdr lst))) (cons (car (cdr lst)) (car lst))
 
 
