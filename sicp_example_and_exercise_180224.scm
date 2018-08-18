@@ -756,3 +756,79 @@
 
 ;;exercise 2.7
 
+(define (upper-bound x)
+    (max (car x) (cdr x)))
+
+(define (lower-bound x)
+    (min (car x) (cdr x)))
+
+(define (upper-bound2 x) car)
+(define (lower-bound2 x) cdr)
+
+;;exercise 2.8
+(define (sub-interval x y)
+    (make-interval 
+        (- (lower-intetval x) (lower-interval y))
+        (- (upper-interval x) (upper-interval y))))
+
+(define (sub-interval2 x y)
+    (add-interval x 
+        (make-interval (- (upper-bound y)) (- (lowet-bound y)))))
+
+;;2.2 Hirerachical Data and closure property.
+
+(define (list-ref iterms n)
+    (if (= n 0)
+        (car iterms)
+        (list-ref (cdr iterms) (- n 1))))
+
+(define (lenght iterms)
+    (if (null? iterms)
+        0
+        (+ 1 (length (cdr iterms)))))
+
+;; List Operations
+
+;; calculat length of a list
+
+(define (length items)
+    (if (null? items)
+        0
+        (+ 1 (length (cdr items)))))
+        
+(define (length2 items)
+    (define (len-iter items count)
+        (if (null? items)
+            count
+            (len-iter (cdr items) (+ 1 count))))
+    (len-iter items 0))
+
+
+;;append two list   
+(define (append la lb)
+    (if (null? la)
+        lb
+        (cons (car la) (append (cdr la) lb))))
+    
+;; exercise 2.17
+
+(define (last-pair items) 
+    (if (null? (cdr items))
+        (car items)
+        (last-pair (cdr items))))
+        
+;; excercise 2.18
+(define (reverse lst)
+    (define (rev2 lst lstnew)
+        (display lst)
+        (display lstnew)
+        (newline)
+    
+        (if (null? lst)
+            lstnew
+            (rev2 (cdr lst) (cons (car lst) lstnew))))
+    (rev2 (cdr lst) (car lst)))
+
+;;(cons (car (cdr (cdr lst))) (cons (car (cdr lst)) (car lst))
+
+
