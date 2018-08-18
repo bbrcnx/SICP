@@ -818,7 +818,8 @@
         (last-pair (cdr items))))
         
 ;; excercise 2.18
-(define (reverse lst)
+(define nil '())
+(define (reverse2 lst)
     (define (rev2 lst lstnew)
         (display lst)
         (display lstnew)
@@ -827,7 +828,8 @@
         (if (null? lst)
             lstnew
             (rev2 (cdr lst) (cons (car lst) lstnew))))
-    (rev2 (cdr lst) (car lst)))
+    (rev2 lst nil))
+
 
 ;;(cons (car (cdr (cdr lst))) (cons (car (cdr lst)) (car lst))
 
