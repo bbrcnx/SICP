@@ -841,5 +841,21 @@
 (define (first-denomination v)
     (car v))
 
-
+;;exercise 2.20
+(define (same-parity2 . v)
+  (define (only v lst parity )
+    (display v)
+    (newline)
+    (cond ((null? v)
+           lst)
+          ((parity (car v))
+           (only (cdr v) (cons (car v) lst) parity))
+          (else (only (cdr v) lst parity))))
+  (define nil '())
+  (cond ((null? v)
+         v)
+        ((odd? (car v))
+         (only v nil odd?))
+        (else
+         (only v nil even?))))
 
