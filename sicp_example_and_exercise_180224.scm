@@ -859,3 +859,13 @@
         (else
          (only v nil even?))))
 
+;;exercise 2.26
+(define (deep-reverse lst)
+
+  (define (iter lst new-lst)
+    (cond ((null? lst)
+           new-lst)
+          ((pair? (car lst))
+           (iter (cdr lst) (cons (deep-reverse (car lst)) new-lst)))
+          (else (iter (cdr lst) (cons (car lst) new-lst)))))
+  (iter lst (list)))
