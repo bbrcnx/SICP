@@ -869,3 +869,13 @@
            (iter (cdr lst) (cons (deep-reverse (car lst)) new-lst)))
           (else (iter (cdr lst) (cons (car lst) new-lst)))))
   (iter lst (list)))
+
+;;exercise 2.27
+(define (fringe lst)
+  (define (iter lst new-lst)
+    (cond ((null? lst) new-lst)
+          ((pair? (car lst))
+           (iter (cdr lst) (iter (car lst) new-lst))) 
+          (else (iter (cdr lst) (cons (car lst) new-lst)))))
+  (reverse (iter lst (list))))
+
