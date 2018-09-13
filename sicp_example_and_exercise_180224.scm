@@ -859,9 +859,8 @@
         (else
          (only v nil even?))))
 
-;;exercise 2.26
+;;exercise 2.27
 (define (deep-reverse lst)
-
   (define (iter lst new-lst)
     (cond ((null? lst)
            new-lst)
@@ -870,7 +869,7 @@
           (else (iter (cdr lst) (cons (car lst) new-lst)))))
   (iter lst (list)))
 
-;;exercise 2.27
+;;exercise 2.28
 (define (fringe lst)
   (define (iter lst new-lst)
     (cond ((null? lst) new-lst)
@@ -879,3 +878,49 @@
           (else (iter (cdr lst) (cons (car lst) new-lst)))))
   (reverse (iter lst (list))))
 
+;;exercise 2.29
+;;a
+(define (make-mobile left right)
+  (list left right))
+
+(define (make-branch length structure)
+  (list length structure))
+
+(define (left-branch mobile)
+  (car mobile))
+
+(define (right-branch mobile)
+  (car (cdr mobile)))
+
+(define (branch-length branch)
+  (car branch))
+
+(define (branch-structure branch)
+  (car (cdr branch)))
+
+;;b
+(define (total-weight mobile)
+  (define (weight structure)
+    (if (not (pair? structure))
+        structure
+        (total-weight structure)))  
+
+  (let ((left-side (branch-structure (left-branch mobile)))
+        (right-side (branch-structure (right-branch mobile))))
+
+    (+ (weight left-side) (weight right-side))))
+
+
+(define b5 (list 9 10))
+(define b6 (list 11 12))
+(define m3 (list b5 b6))
+
+(define b4 (list 7 8))
+(define b3 (list 2 m3))
+(define m2 (list b3 b4))
+
+(define b2 (list 2 m2))
+(define b1 (list 5 6))
+(define m1 (list b1 b2))
+
+(total-weight m1)
